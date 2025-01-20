@@ -1,11 +1,7 @@
 <template>
-  <view>11</view>
+  <view>首页</view>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts"></script>
 
-</script>
-
-<style>
-
-</style>
+<style></style>

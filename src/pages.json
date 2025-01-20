@@ -1,9 +1,27 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"pages": [ 
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "首页"
+			}
+		},
+		{
+			"path": "pages/ordersystem/index",
+			"style": {
+				"navigationBarTitleText": "点单"
+			}
+		},
+		{
+			"path": "pages/orders/index",
+			"style": {
+				"navigationBarTitleText": "订单"
+			}
+		},
+		{
+			"path": "pages/personal/index",
+			"style": {
+				"navigationBarTitleText": "我的"
 			}
 		}
 	],
@@ -12,5 +30,36 @@
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#c4c4c5",
+		"selectedColor": "#1d49c4",
+		"backgroundColor": "#ffffff",
+		"list": [
+			{
+		  "pagePath": "pages/index/index",
+			"text": "首页",
+			"iconPath": "static/tab/shouye-a.png",
+			"selectedIconPath": "static/tab/shouye-b.png"
+			},
+			{
+				"pagePath": "pages/ordersystem/index",
+				"text": "点单",
+				"iconPath": "static/tab/diandan-a.png",
+				"selectedIconPath": "static/tab/diandan-b.png"
+			},
+			{
+				"pagePath": "pages/orders/index",
+				"text": "订单",
+				"iconPath": "static/tab/dingdan-a.png",
+				"selectedIconPath": "static/tab/dingdan-b.png"
+			},
+			{
+				"pagePath": "pages/personal/index",
+				"text": "订单",
+				"iconPath": "static/tab/wode-a.png",
+				"selectedIconPath": "static/tab/wode-b.png"
+			}
+		]
 	}
 }
