@@ -41,21 +41,17 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { onLoad } from '@dcloudio/uni-app'
+import { request } from '@/api/request'
+import type { SwiperItem } from '@/types/index'
 
-const swiperList = ref([
-  {
-    carouselImages:
-      'https://personal-project.oss-cn-shenzhen.aliyuncs.com/chabaidao/1737430335150140.jpg'
-  },
-  {
-    carouselImages:
-      'https://personal-project.oss-cn-shenzhen.aliyuncs.com/chabaidao/1737430457655304.jpg'
-  },
-  {
-    carouselImages:
-      'https://personal-project.oss-cn-shenzhen.aliyuncs.com/chabaidao/1737430466075501.jpg'
-  }
-])
+// 顶部轮播图
+const swiperList = ref<SwiperItem[]>()
+
+onLoad(async () => {
+  const res = await request<SwiperItem[]>('/get-swiper')
+  swiperList.value = res.data
+})
 // 指示点初始状态
 const currentIndex = ref(0)
 // 自定义指示点的滚动下标值
