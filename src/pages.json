@@ -10,7 +10,8 @@
 		{
 			"path": "pages/ordersystem/index",
 			"style": {
-				"navigationBarTitleText": "点单"
+				"navigationBarTitleText": "点单",
+				"navigationStyle": "custom"
 			}
 		},
 		{
