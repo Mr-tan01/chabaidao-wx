@@ -38,7 +38,7 @@ onLoad(() => {
   query
     .select('.search-view') // 选择元素节点
     .boundingClientRect((rect: { height: number }) => {
-      console.log(rect)
+      // console.log(rect)
       spacingHeight.value = rect.height + 'px'
     })
     .exec()
