@@ -44,6 +44,7 @@
           class="goods-infor"
           v-for="(item_a, index_a) in item.category"
           :key="index_a"
+          @click="selectGoods(index, index_a, item._id, item_a._id)"
         >
           <image :src="item_a.goods_image" mode="aspectFill" />
           <view class="product-name">
@@ -212,6 +213,21 @@ function scrollHeight(event: { detail: { scrollTop: number } }) {
     //上拉判断
     dynamiIdex.value -= 1
   }
+}
+
+// 点击进入详情页
+function selectGoods(
+  index: number,
+  index_a: number,
+  fatherId: string,
+  sonId: string
+) {
+  const theGoods = allGoods.value[index].category[index_a]
+  const str = JSON.stringify({ theGoods, fatherId, sonId })
+  uni.navigateTo({
+    // 传递商品相关参数
+    url: `/pages/specifications/index?goods=` + str
+  })
 }
 </script>
 
