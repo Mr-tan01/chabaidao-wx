@@ -72,6 +72,7 @@
           'background-color': buttonStyle.back,
           color: buttonStyle.color
         }"
+        @click="addToCart"
       >
         加入购物车
       </button>
@@ -88,6 +89,8 @@ import { onLoad } from '@dcloudio/uni-app'
 import { getMenuButton, getMerchanInfo } from '@/api/menubuttom'
 import type { Category, GoodsSku, Sku } from '@/types/ordersystem.d'
 import { request } from '@/api/request'
+import type { CartItem } from '@/types/cart'
+import { getCartStatus } from '@/store/index'
 
 // 商品分类id
 const parentLevel = ref('')
@@ -289,6 +292,40 @@ const buttonStyle = computed(() => {
     }
   }
 })
+
+// 提交到购物车
+function addToCart() {
+  const skuMap = selectedSku.value.map((item) => item.sku.name)
+  const skuIdArr = selectedSku.value.map((item) => item.sku.statsId)
+  const item: CartItem = {
+    // 分类id
+    fatherId: parentLevel.value,
+    // 商品id
+    sonId: sublevel.value,
+    // 商品名称
+    goods_name: goodsData.value[0].goods_name,
+    goods_image: goodsData.value[0].goods_image,
+    goods_id: goodsData.value[0]._id,
+    goodsPrice: goodsPrice.value,
+    // 商品数量
+    goodsQuantity: orderQuantity.value,
+    // 商品总价
+    totalPrice: 0,
+    // 商品规格
+    sku: skuMap,
+    // 商品规格id
+    skuIdArr: skuIdArr,
+    // sku对象唯一id
+    sku_id: sku_id.value,
+    // false标识为从详情页提交到购物车
+    homePage: false
+  }
+  // 提交
+  getCartStatus().addToCart(item)
+  console.log(getCartStatus().cartItems)
+  // 返回上一页
+  preVious()
+}
 
 // 返回上一页
 function preVious() {
