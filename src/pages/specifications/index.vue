@@ -322,7 +322,7 @@ function addToCart() {
   }
   // 提交
   getCartStatus().addToCart(item)
-  console.log(getCartStatus().cartItems)
+  // console.log(getCartStatus().cartItems)
   // 返回上一页
   preVious()
 }

@@ -72,9 +72,30 @@
                     src="/static/jian-goods.png"
                     mode="widthFix"
                     v-if="item_a.quantity > 0"
+                    @click.stop="
+                      addSingleProduct(
+                        index,
+                        index_a,
+                        item._id,
+                        item_a._id,
+                        '001'
+                      )
+                    "
                   />
                   <text v-if="item_a.quantity > 0">{{ item_a.quantity }}</text>
-                  <image src="/static/jia-goods.png" mode="widthFix" />
+                  <image
+                    src="/static/jia-goods.png"
+                    mode="widthFix"
+                    @click.stop="
+                      addSingleProduct(
+                        index,
+                        index_a,
+                        item._id,
+                        item_a._id,
+                        '002'
+                      )
+                    "
+                  />
                 </view>
               </block>
               <view v-else>
@@ -93,12 +114,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import TopArea from './components/top-area.vue'
 import ShoppingCart from './components/shopping-cart.vue'
 import { request } from '@/api/request'
 import type { Distance, AllGoods } from '@/types/ordersystem.d'
+import type { CartItem } from '@/types/cart'
+import { getCartStatus } from '@/store/index'
+const cartStore = getCartStatus()
 //#region
 onLoad(() => {
   // 开始定位
@@ -229,6 +253,98 @@ function selectGoods(
     url: `/pages/specifications/index?goods=` + str
   })
 }
+
+// 对没有规格的商品进行加减数量
+function addSingleProduct(
+  index: number,
+  index_a: number,
+  fatherId: string,
+  sonId: string,
+  type: string
+) {
+  if (type === '001') {
+    allGoods.value[index].category[index_a].quantity--
+  } else {
+    allGoods.value[index].category[index_a].quantity++
+  }
+  const theGoods = allGoods.value[index].category[index_a]
+  const item: CartItem = {
+    // 分类id
+    fatherId,
+    // 商品id
+    sonId,
+    // 商品名称
+    goods_name: theGoods.goods_name,
+    goods_image: theGoods.goods_image,
+    goods_id: theGoods._id,
+    goodsPrice: theGoods.goods_price,
+    // 商品数量
+    goodsQuantity: theGoods.quantity,
+    // 商品总价
+    totalPrice: 0,
+    // 商品规格
+    sku: [],
+    // 商品规格id
+    skuIdArr: [],
+    // sku对象唯一id
+    sku_id: '',
+    // true标识为从下单页提交到购物车
+    homePage: true
+  }
+  // 提交
+  getCartStatus().addToCart(item)
+}
+// 监听购物车加减变化，而改变下单页加减变化
+watch(
+  () => cartStore.cartItems.map((item) => item.goodsQuantity),
+  (newVal, oldVal): void => {
+    for (let i = 0; i < newVal.length; i++) {
+      if (newVal[i] !== oldVal[i]) {
+        // console.log(cartStore.cartItems[i])
+        var changedItem = cartStore.cartItems[i]
+      }
+    }
+    // 购物车为空则不再执行'
+    if (cartStore.cartItems.length <= 0) return
+    // 这里找出相同商品，取出父级id和子级id、价格
+    let goodsPrice = 0
+    let fatherId = ''
+    let sonId = ''
+    cartStore.cartItems.forEach((item) => {
+      // 如果是相同商品不同规格的话，则不同规格数量相加
+      if (changedItem && item.goods_id === changedItem.goods_id) {
+        goodsPrice += item.goodsQuantity
+        fatherId = item.fatherId
+        sonId = item.sonId
+      }
+    })
+    // 根据当前点击的商品父级id和子级id查找下标进行更新
+    let parentIndex = allGoods.value.findIndex((item) => item._id === fatherId)
+    if (parentIndex >= 0) {
+      const category = allGoods.value[parentIndex].category
+      const childIndex = category.findIndex((item) => item._id === sonId)
+      // 更新对应商品数量
+      allGoods.value[parentIndex].category[childIndex].quantity =
+        // @ts-ignore
+        goodsPrice
+    }
+  }
+)
+// 监听如果清空购物车，将当前页面商品数量重置为0
+watch(
+  () => cartStore.cartItems,
+  (newVal) => {
+    if (newVal.length <= 0) {
+      if (allGoods.value.length > 0) {
+        allGoods.value.forEach((item) => {
+          item.category.forEach((item_a) => {
+            item_a.quantity = 0
+          })
+        })
+      }
+    }
+  }
+)
 </script>
 
 <style>
