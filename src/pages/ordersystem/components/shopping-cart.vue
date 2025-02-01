@@ -50,9 +50,9 @@
     </view>
   </view>
   <!-- 是否打烊 -->
-  <view class="close-up-shop" v-if="closeTime"
+  <!-- <view class="close-up-shop" v-if="closeTime"
     >店铺已打烊 营业时间{{ getMerchanInfo().businessHours.join('-') }}</view
-  >
+  > -->
 </template>
 
 <script setup lang="ts">

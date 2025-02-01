@@ -15,6 +15,13 @@
 			}
 		},
 		{
+			"path": "pages/search-products/index",
+			"style": {
+				"navigationBarTitleText": "搜索商品",
+				"navigationBarBackgroundColor": "#ffffff"
+			}
+		},
+		{
 			"path": "pages/specifications/index",
 			"style": {
 				"navigationBarTitleText": "商品详情",

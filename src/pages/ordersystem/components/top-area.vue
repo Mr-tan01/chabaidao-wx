@@ -3,7 +3,7 @@
     <!-- 自适应顶部高度与胶囊平行 -->
     <view :style="{ height: getMenuButton().top }"></view>
     <!-- 搜索框区域 -->
-    <view class="search-input">
+    <view class="search-input" @click="searchGoods">
       <image src="/static/sousuo.png" mode="widthFix" />
       <input placeholder="搜索商品" placeholder-class="input-color" disabled />
     </view>
@@ -57,6 +57,11 @@ withDefaults(
     distance: '0米'
   }
 )
+
+// 进入搜索页
+function searchGoods() {
+  uni.navigateTo({ url: '/pages/search-products/index' })
+}
 </script>
 
 <style>
