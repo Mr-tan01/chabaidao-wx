@@ -121,7 +121,7 @@ import ShoppingCart from './components/shopping-cart.vue'
 import { request } from '@/api/request'
 import type { Distance, AllGoods } from '@/types/ordersystem.d'
 import type { CartItem } from '@/types/cart'
-import { getCartStatus } from '@/store/index'
+import { getCartStatus, pageGoodsId } from '@/store/index'
 const cartStore = getCartStatus()
 //#region
 onLoad(() => {
@@ -345,6 +345,30 @@ watch(
     }
   }
 )
+
+// 推荐图跳转到商品详情页
+watch([() => pageGoodsId().goodsId, allGoods], ([goodsId, goods]) => {
+  if (goodsId.length > 0 && goods.length > 0) {
+    // 父级下标
+    const parentIndex = allGoods.value.findIndex(
+      (item) => item._id === goodsId[0].categoryId
+    )
+    if (parentIndex >= 0) {
+      // 子级下标
+      const category = allGoods.value[parentIndex].category
+      const childIndex = category.findIndex(
+        (item) => item._id === goodsId[0].goodsId
+      )
+      // 跳转
+      selectGoods(
+        parentIndex,
+        childIndex,
+        goodsId[0].categoryId,
+        goodsId[0].goodsId
+      )
+    }
+  }
+})
 </script>
 
 <style>

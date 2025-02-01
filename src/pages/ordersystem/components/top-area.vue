@@ -13,7 +13,9 @@
         <image src="/static/xing.png" mode="widthFix" />
         <!-- 商家名称 -->
         <text> {{ getMerchanInfo().tradeName }} </text>
-        <text> 外卖到家 </text>
+        <text>
+          {{ pagePlaceOrder().orderType === '1' ? '到店自取' : '外卖到家' }}
+        </text>
       </view>
       <view class="distance-view">
         <image src="/static/weizhi.png" mode="widthFix" />
@@ -29,6 +31,7 @@
 import { ref, getCurrentInstance } from 'vue'
 import { getMenuButton, getMerchanInfo } from '@/api/menubuttom'
 import { onLoad } from '@dcloudio/uni-app'
+import { pagePlaceOrder } from '@/store/index'
 
 // 获取该页面指定元素的高度
 const spacingHeight = ref('')

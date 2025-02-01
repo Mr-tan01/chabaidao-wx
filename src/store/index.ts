@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import type { CartItem } from '@/types/cart'
 import Decimal from 'decimal.js'
 
+// 购物车数据状态管理
 export const getCartStatus = defineStore('shoppingcart', {
   state: () => ({
     cartItems: [] as CartItem[]
@@ -68,4 +69,28 @@ export const getCartStatus = defineStore('shoppingcart', {
       })
     }
   }
+})
+
+// 首页轮播推荐商品跳转到点单页面，找到该商品去下单
+interface Goodsis {
+  categoryId: string
+  goodsId: string
+}
+export const pageGoodsId = defineStore('pageGoodsId', {
+  state: () => ({
+    goodsId: [] as Goodsis[]
+  }),
+  actions: {
+    uploadGoodsId(item: Goodsis) {
+      this.goodsId = [item]
+    }
+  }
+})
+
+// 存储首页用户选择的配送类型
+export const pagePlaceOrder = defineStore('pagePlaceOrder', {
+  state: () => ({
+    // 默认外卖
+    orderType: '2'
+  })
 })

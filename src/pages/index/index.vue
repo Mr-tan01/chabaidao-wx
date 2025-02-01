@@ -9,7 +9,11 @@
       @change="changeCurrent"
     >
       <swiper-item v-for="(item, index) in swiperList" :key="index">
-        <image :src="item.carouselImages" mode="aspectFill" />
+        <image
+          :src="item.carouselImages"
+          mode="aspectFill"
+          @click="recommendGoods(item.categoryId, item.goodsId)"
+        />
       </swiper-item>
     </swiper>
     <!-- 自定义指示点 -->
@@ -23,7 +27,11 @@
   </view>
   <!-- 到店和外卖选择 -->
   <view class="buy-btn">
-    <view v-for="(item, index) in orderAction" :key="index">
+    <view
+      v-for="(item, index) in orderAction"
+      :key="index"
+      @click="routerOder(item.orderType)"
+    >
       <image :src="item.icon" mode="widthFix" />
       <text>{{ item.text }}</text>
     </view>
@@ -79,6 +87,22 @@ const adAction = ref([
   'http://ge.thexxdd.cn/kecheng-chabaidao/banner001.jpg',
   'http://ge.thexxdd.cn/kecheng-chabaidao/banner002.jpg'
 ])
+
+// 推荐图跳转到商品详情页
+import { pageGoodsId, pagePlaceOrder } from '@/store/index'
+function recommendGoods(categoryId: string, goodsId: string) {
+  uni.switchTab({ url: '/pages/ordersystem/index' })
+  pageGoodsId().uploadGoodsId({ categoryId, goodsId })
+}
+
+// 选择配送类型
+function routerOder(orderType: string) {
+  uni.switchTab({ url: '/pages/ordersystem/index' })
+  // 修改配送类型
+  pagePlaceOrder().$patch((val) => {
+    val.orderType = orderType
+  })
+}
 </script>
 
 <style>

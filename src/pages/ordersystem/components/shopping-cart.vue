@@ -5,8 +5,15 @@
       <text>{{ cartData.getCartCount }}</text>
       <image src="/static/gouwuche.png" mode="widthFix" />
     </view>
-    <view>合计¥{{ cartData.payMentPrice }}</view>
-    <button>去结算</button>
+    <view class="checkout-price">合计¥{{ cartData.payMentPrice }}</view>
+    <button v-if="pagePlaceOrder().orderType == '1'">去结算</button>
+    <button v-else>
+      {{
+        cartData.payMentPrice >= getMerchanInfo().initialPrice
+          ? '去结算'
+          : `差¥${liFtingPrice}起送`
+      }}
+    </button>
   </view>
   <!-- 遮罩层 -->
   <view class="popup-cart" v-show="showCart" @click="showCart = false"></view>
@@ -42,11 +49,21 @@
       </view>
     </view>
   </view>
+  <!-- 是否打烊 -->
+  <view class="close-up-shop" v-if="closeTime"
+    >店铺已打烊 营业时间{{ getMerchanInfo().businessHours.join('-') }}</view
+  >
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { getCartStatus } from '@/store/index'
+import { getCartStatus, pagePlaceOrder } from '@/store/index'
+import { getMerchanInfo } from '@/api/menubuttom'
+import Decimal from 'decimal.js'
+import { onLoad } from '@dcloudio/uni-app'
+import moment from 'moment'
+// 使用中国区语言
+moment.locale('zh-cn')
 
 const cartStore = getCartStatus()
 // 监听购物车数据变化
@@ -91,6 +108,29 @@ function addQuantity(index: number) {
       val.cartItems[index].goodsQuantity * val.cartItems[index].goodsPrice
   })
 }
+
+// 外卖差多少起送
+const liFtingPrice = computed(() => {
+  // 起送价
+  const num1 = new Decimal(getMerchanInfo().initialPrice)
+  // console.log(num1)
+  // 支付总价
+  const num2 = new Decimal(cartData.value.payMentPrice)
+  // console.log(num2)
+  return Number(num1.minus(num2).toString())
+})
+
+// 是否打烊
+const closeTime = ref(false)
+onLoad(() => {
+  // 起始时间
+  const openingTime = moment(getMerchanInfo().businessHours[0], 'HH:mm:ss')
+  // 结束时间
+  const closingTime = moment(getMerchanInfo().businessHours[1], 'HH:mm:ss')
+  // 是否之间，返回布尔值
+  const is = moment().isBetween(openingTime, closingTime, undefined, '[]')
+  closeTime.value = is ? false : true
+})
 </script>
 
 <style>
