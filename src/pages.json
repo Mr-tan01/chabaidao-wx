@@ -1,6 +1,12 @@
 {
 	"pages": [ 
 		{
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		},
+		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "首页",
@@ -39,12 +45,6 @@
 			"style": {
 				"navigationBarTitleText": "我的"
 			}
-		},
-		{
-			"path": "pages/login/index",
-			"style": {
-				"navigationBarTitleText": "登录"
-			}
 		}
 	],
 	"globalStyle": {
@@ -78,7 +78,7 @@
 			},
 			{
 				"pagePath": "pages/personal/index",
-				"text": "订单",
+				"text": "我的",
 				"iconPath": "static/tab/wode-a.png",
 				"selectedIconPath": "static/tab/wode-b.png"
 			}
