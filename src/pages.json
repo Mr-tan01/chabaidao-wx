@@ -1,9 +1,9 @@
 {
 	"pages": [ 
 		{
-			"path": "pages/login/index",
+			"path": "pages/upload-wxuser/index",
 			"style": {
-				"navigationBarTitleText": "登录"
+				"navigationBarTitleText": "修改个人资料"
 			}
 		},
 		{
@@ -44,6 +44,13 @@
 			"path": "pages/personal/index",
 			"style": {
 				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"navigationStyle": "custom"
 			}
 		}
 	],

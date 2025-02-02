@@ -1,5 +1,15 @@
 const requestUrl: string = 'http://127.0.0.1:7001'
 const requestAddress = requestUrl + '/api/wx'
+export const uploadFileUrl = requestUrl + '/api/admin/uploadFile'
+
+// 取出本地缓存用户token
+import { Base64 } from 'js-base64'
+function getToken(): string {
+  const token: string = uni.getStorageSync('wxUserInfo').user_Token || ''
+  // 因为后端是Basic格式
+  const base64Token = Base64.encode(token + ':')
+  return 'Basic ' + base64Token
+}
 
 // 定义一个泛型接口 Data，用于表示包含数据、错误信息和消息的通用数据结构
 interface Data<T> {
@@ -19,6 +29,7 @@ export const request = <T>(
       url: requestAddress + url,
       method,
       data,
+      header: { Authorization: getToken() },
       // 返回的数据是不确定类型的，所以不需要进行类型断言
       success: (res) => {
         const status = res.statusCode
