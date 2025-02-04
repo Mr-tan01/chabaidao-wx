@@ -43,3 +43,23 @@ export type OutdoorDining = {
   receiverAddress: ReceiverAddress[]
   productOrder: CartItem[]
 }
+
+// 我的订单列表类型
+export type UserOrderList = {
+  orderType: string
+  paymentPrice: number
+  productOrderCount: number
+  _id: string
+  productOrder: CartItem[]
+}
+// 订单详情类型
+export type UserOrderDetails = {
+  oerderTime: string
+  orderNumber: string
+  orderType: '1'
+  paymentPrice: number
+  takeMealCode: number
+  _id: string
+  productOrder: CartItem[]
+  receiverAddress: ReceiverAddress[]
+}
