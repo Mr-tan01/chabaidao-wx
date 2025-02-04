@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { CartItem } from '@/types/cart'
+import type { CartItem, ReceiverAddress } from '@/types/cart'
 import Decimal from 'decimal.js'
 
 // 购物车数据状态管理
@@ -15,7 +15,7 @@ export const getCartStatus = defineStore('shoppingcart', {
         (subtotal, goodsItem) => subtotal + goodsItem.totalPrice,
         0
       )
-      return res
+      return Number(new Decimal(res).toFixed(2))
     },
     // 计算购物车有多少商品
     getCartCount(): number {
@@ -23,7 +23,7 @@ export const getCartStatus = defineStore('shoppingcart', {
         (subtotal, goodsItem) => subtotal + goodsItem.goodsQuantity,
         0
       )
-      return Number(new Decimal(res).toFixed(2))
+      return res
     }
   },
   actions: {
@@ -93,4 +93,16 @@ export const pagePlaceOrder = defineStore('pagePlaceOrder', {
     // 默认外卖
     orderType: '2'
   })
+})
+
+// 存储用户选中的收货地址
+export const receiverAddress = defineStore('receiverAddress', {
+  state: () => ({
+    addressItems: [] as ReceiverAddress[]
+  }),
+  actions: {
+    uploadAddress(item: ReceiverAddress) {
+      this.addressItems = [item]
+    }
+  }
 })

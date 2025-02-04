@@ -22,3 +22,24 @@ export type CartItem = {
   // 判断有没有规格的商品
   homePage?: boolean
 }
+
+// 确认订单用户选择的收货地址类型
+export type ReceiverAddress = {
+  address: string
+  detailedAddress: string
+  mobile: string
+  name: string
+}
+
+// 自提订单类型
+export type SelfPickupOrder = {
+  orderType: string
+  userMobile: string
+  productOrder: CartItem[]
+}
+// 外卖订单类型
+export type OutdoorDining = {
+  orderType: string
+  receiverAddress: ReceiverAddress[]
+  productOrder: CartItem[]
+}

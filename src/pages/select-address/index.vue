@@ -3,7 +3,7 @@
     manageAddress ? '完成' : '管理'
   }}</text>
   <view class="address-view" v-for="(item, index) in userAddress" :key="index">
-    <view class="address-flex">
+    <view class="address-flex" @click="selectAddress(item)">
       <view class="select-address">
         <text>{{ item.address }}</text>
         <text class="user-detail-address">{{ item.detailedAddress }}</text>
@@ -84,6 +84,19 @@ function subMit() {
   uni.navigateTo({
     url: '/pages/add-address/index'
   })
+}
+
+// 下单选择地址
+import { receiverAddress } from '@/store'
+const addressStore = receiverAddress()
+function selectAddress(item: Address) {
+  addressStore.uploadAddress({
+    address: item.address,
+    detailedAddress: item.detailedAddress,
+    name: item.name,
+    mobile: item.mobile
+  })
+  uni.navigateBack({ delta: 1 })
 }
 </script>
 

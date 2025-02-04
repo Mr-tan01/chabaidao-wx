@@ -1,13 +1,6 @@
 {
 	"pages": [ 
 		{
-			"path": "pages/select-address/index",
-			"style": {
-				"navigationBarTitleText": "选择收货地址",
-				"navigationBarBackgroundColor": "#ffffff"
-			}
-		},
-		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "首页",
@@ -38,7 +31,14 @@
 		{
 			"path": "pages/orders/index",
 			"style": {
-				"navigationBarTitleText": "订单"
+				"navigationBarTitleText": "我的订单"
+			}
+		},
+		{
+			"path": "pages/payment/index",
+			"style": {
+				"navigationBarTitleText": "确认订单",
+				"navigationBarBackgroundColor": "#ffffff"
 			}
 		},
 		{
@@ -51,6 +51,13 @@
 			"path": "pages/upload-wxuser/index",
 			"style": {
 				"navigationBarTitleText": "修改个人资料"
+			}
+		},
+		{
+			"path": "pages/select-address/index",
+			"style": {
+				"navigationBarTitleText": "选择收货地址",
+				"navigationBarBackgroundColor": "#ffffff"
 			}
 		},
 		{

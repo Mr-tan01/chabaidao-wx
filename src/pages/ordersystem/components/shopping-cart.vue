@@ -6,8 +6,10 @@
       <image src="/static/gouwuche.png" mode="widthFix" />
     </view>
     <view class="checkout-price">合计¥{{ cartData.payMentPrice }}</view>
-    <button v-if="pagePlaceOrder().orderType == '1'">去结算</button>
-    <button v-else>
+    <button @click="gotoResult" v-if="pagePlaceOrder().orderType == '1'">
+      去结算
+    </button>
+    <button @click="gotoResult" v-else>
       {{
         cartData.payMentPrice >= getMerchanInfo().initialPrice
           ? '去结算'
@@ -131,6 +133,13 @@ onLoad(() => {
   const is = moment().isBetween(openingTime, closingTime, undefined, '[]')
   closeTime.value = is ? false : true
 })
+
+// 跳转下单页面
+function gotoResult() {
+  uni.navigateTo({
+    url: '/pages/payment/index'
+  })
+}
 </script>
 
 <style>
