@@ -1,19 +1,6 @@
 {
 	"pages": [ 
 		{
-			"path": "pages/orders/index",
-			"style": {
-				"navigationBarTitleText": "我的订单"
-			}
-		},
-		{
-			"path": "pages/order-details/index",
-			"style": {
-				"navigationBarTitleText": "订单详情",
-				"navigationBarBackgroundColor": "#ffffff"
-			}
-		},
-		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "首页",
@@ -49,15 +36,35 @@
 			}
 		},
 		{
+			"path": "pages/orders/index",
+			"style": {
+				"navigationBarTitleText": "我的订单"
+			}
+		},
+		{
+			"path": "pages/order-details/index",
+			"style": {
+				"navigationBarTitleText": "订单详情",
+				"navigationBarBackgroundColor": "#ffffff"
+			}
+		},
+		{
 			"path": "pages/personal/index",
 			"style": {
-				"navigationBarTitleText": "我的"
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#e2eafd"
 			}
 		},
 		{
 			"path": "pages/upload-wxuser/index",
 			"style": {
 				"navigationBarTitleText": "修改个人资料"
+			}
+		},
+		{
+			"path": "pages/customer-service/index",
+			"style": {
+				"navigationBarTitleText": "客服"
 			}
 		},
 		{
