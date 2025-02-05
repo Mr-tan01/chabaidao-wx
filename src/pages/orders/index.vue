@@ -21,13 +21,16 @@
       <view class="order-price">¥{{ item.paymentPrice }}</view>
     </view>
   </view>
+  <!-- 空订单提示 -->
+  <Tips :noData="noData" :tips="tips"></Tips>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { onLoad, onShow, onReachBottom } from '@dcloudio/uni-app'
 import { request } from '@/api/request'
 import type { UserOrderList } from '@/types/cart'
+import Tips from '../component/tips.vue'
 
 const orderDataList = ref<UserOrderList[]>([])
 const page = ref(1)
@@ -58,6 +61,18 @@ function skip(id: string) {
     url: '/pages/order-details/index?id=' + id
   })
 }
+
+// 无订单提示
+const noData = ref(false)
+const tips = ref('暂无订单，快去下单吧')
+watch(
+  orderDataList,
+  (newVal) => {
+    // 如果为空地址则进行提示
+    noData.value = newVal.length > 0 ? false : true
+  },
+  { deep: true }
+)
 </script>
 
 <style>
