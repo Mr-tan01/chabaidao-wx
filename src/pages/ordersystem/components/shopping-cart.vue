@@ -9,7 +9,13 @@
     <button @click="gotoResult" v-if="pagePlaceOrder().orderType == '1'">
       去结算
     </button>
-    <button @click="gotoResult" v-else>
+    <button
+      @click="gotoResult"
+      v-else
+      :disabled="
+        cartData.payMentPrice >= getMerchanInfo().initialPrice ? false : true
+      "
+    >
       {{
         cartData.payMentPrice >= getMerchanInfo().initialPrice
           ? '去结算'
@@ -52,9 +58,9 @@
     </view>
   </view>
   <!-- 是否打烊 -->
-  <!-- <view class="close-up-shop" v-if="closeTime"
+  <view class="close-up-shop" v-if="closeTime"
     >店铺已打烊 营业时间{{ getMerchanInfo().businessHours.join('-') }}</view
-  > -->
+  >
 </template>
 
 <script setup lang="ts">
